@@ -11,5 +11,9 @@ abstract final class Env {
   );
   static const bool enableHttpLogs = bool.fromEnvironment('ENABLE_HTTP_LOGS');
 
+  /// Use the in-memory auth backend instead of real `/auth/*` endpoints.
+  /// Defaults to false so a misconfigured build can never accept fake logins.
+  static const bool useMockAuth = bool.fromEnvironment('USE_MOCK_AUTH');
+
   static bool get isProd => name == 'prod';
 }
