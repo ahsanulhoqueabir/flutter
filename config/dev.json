@@ -1,0 +1,6 @@
+{
+  "APP_ENV": "dev",
+  "APP_NAME": "Template Dev",
+  "API_BASE_URL": "https://jsonplaceholder.typicode.com",
+  "ENABLE_HTTP_LOGS": "true"
+}
