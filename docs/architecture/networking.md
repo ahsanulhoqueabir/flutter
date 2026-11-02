@@ -38,7 +38,12 @@ The type argument is the raw JSON shape: `Map<String, dynamic>` for an object, `
 | `NetworkException` | No connection |
 | `RequestTimeoutException` | Connect, send, or receive timeout |
 | `UnauthorizedException` | HTTP 401 |
+| `ForbiddenException` | HTTP 403 |
 | `NotFoundException` | HTTP 404 |
+| `ValidationException(fieldErrors)` | HTTP 400 or 422 |
+| `TooManyRequestsException` | HTTP 429 |
+| `MaintenanceException` | HTTP 503 |
+| `BadResponseException` | Response body has an unexpected shape |
 | `ServerException(statusCode)` | Any other non-2xx response |
 | `CancelledException` | The request was cancelled |
 | `UnknownApiException` | Anything else |
@@ -57,11 +62,11 @@ try {
 
 ## Authentication
 
-`AuthInterceptor` adds `Authorization: Bearer <token>` to every request when a token is saved. Save or clear it with:
+`AuthInterceptor` adds `Authorization: Bearer <token>` to every request when a token is saved, and signs the user out if the server rejects that token. Sign in and out through `authProvider`, which saves and clears the token:
 
 ```dart
-await ref.read(localStorageProvider).setAuthToken(token);   // after login
-await ref.read(localStorageProvider).setAuthToken(null);    // on logout
+await ref.read(authProvider.notifier).login(email: email, password: password);
+await ref.read(authProvider.notifier).logout();
 ```
 
 For production apps holding real credentials, move the token to `flutter_secure_storage`. To refresh expired tokens, add an interceptor that catches 401 responses, refreshes, and retries.

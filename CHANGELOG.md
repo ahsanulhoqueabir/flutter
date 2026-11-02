@@ -5,6 +5,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+### Added
+- Splash, onboarding, auth, profile, about, legal, not found, offline and maintenance screens, tab navigation and a component gallery.
+- Reusable form controls, centralized validators, status views and feedback helpers.
+- Session handling with route guards, global error handling, a connectivity banner and more API error types.
+
 ## [0.1.0] - 2026-11-02
 
 ### Added

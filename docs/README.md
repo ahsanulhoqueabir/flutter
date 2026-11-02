@@ -21,6 +21,7 @@ Start with **Getting started** if you are new to the project.
   - [State management](architecture/state-management.md): Riverpod and which provider to use when
   - [Networking](architecture/networking.md): ApiClient, errors, interceptors, auth
   - [Navigation](architecture/navigation.md): go_router setup and adding routes
+  - [Screens and app flow](architecture/app-flow.md): every screen, connecting real auth, handled edge cases
 - Build and release
   - [Manual build](build/manual-build.md): building each platform step by step
   - [Versioning](build/versioning.md): how version numbers work and the scripts that manage them
@@ -28,6 +29,7 @@ Start with **Getting started** if you are new to the project.
 - Guides
   - [Adding a feature](guides/adding-a-feature.md)
   - [Adding an API endpoint](guides/adding-an-api-endpoint.md)
+  - [Forms and validation](guides/forms-and-validation.md)
 - Conventions
   - [Code style](conventions/code-style.md)
   - [Testing](conventions/testing.md)

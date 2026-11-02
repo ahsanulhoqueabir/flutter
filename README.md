@@ -8,7 +8,9 @@ A production-ready starting point for Flutter apps.
 - **dev / staging / prod** environments via `--dart-define-from-file`
 - Material 3 light/dark theme with persisted theme mode
 - **Automatic versioning** on every build, plus major/minor bump scripts
-- Tests with `mocktail`, GitHub Actions CI, strict lints
+- Ready-made screens: splash, onboarding, auth, home, profile, settings, about, legal, not found, offline, maintenance
+- Reusable form controls with centralized validation, plus status views and feedback helpers
+- Tests with `mocktail`, strict lints
 - Docs for developers (`docs/`) and instructions for AI agents (`CLAUDE.md`, `.claude/`)
 
 ## Quick start

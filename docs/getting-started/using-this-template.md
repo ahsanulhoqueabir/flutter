@@ -46,12 +46,18 @@ Edit `config/dev.json`, `config/staging.json`, `config/prod.json` with your real
 
 `lib/features/posts/` and its tests are a reference implementation that calls a public demo API. When your first real feature exists:
 
-1. Delete `lib/features/posts/` and `test/features/posts/`.
-2. Remove its routes from `lib/app/router/routes.dart` and `app_router.dart`, and point `initialLocation` at your home screen.
+1. Delete `lib/features/posts/` and `test/features/posts/`, and update `test/app/app_flow_test.dart`, which uses the posts screen as its home page.
+2. Remove its routes from `lib/app/router/routes.dart` and `app_router.dart`, and put your home screen at `Routes.home`.
 
-Keep `features/settings/` if you want the theme switcher.
+Keep the other features: they are the screens most apps need.
 
-## 7. Reset the version
+## 7. Replace the placeholders
+
+- Connect real auth and set `USE_MOCK_AUTH` as needed. See [app-flow.md](../architecture/app-flow.md).
+- Replace the placeholder text in `LegalScreen` (`lib/features/about/presentation/about_screen.dart`). Do this before any release.
+- Rewrite the onboarding pages and replace `BrandMark` with your logo.
+
+## 8. Reset the version
 
 ```bash
 dart run scripts/version.dart set 0.1.0

@@ -10,20 +10,25 @@ lib/
 ├── app/                   The app shell
 │   ├── app.dart           MaterialApp.router: theme, router, title
 │   ├── router/            Route constants and the GoRouter provider
-│   └── theme/             Light and dark ThemeData
+│   └── theme/             Light and dark ThemeData, spacing and radius tokens
 ├── core/                  Infrastructure shared by all features (no feature code here)
 │   ├── config/env.dart    Environment values
 │   ├── network/           Dio setup, ApiClient, ApiException, interceptors
 │   ├── storage/           LocalStorage wrapper around SharedPreferences
+│   ├── forms/             Validation rules
+│   ├── connectivity/      Online/offline state
+│   ├── error/             Global error handling
 │   └── utils/             Logger and small helpers
-├── shared/widgets/        Reusable widgets with no feature knowledge
+├── shared/widgets/        Buttons, form controls, status views, snackbars, dialogs
 └── features/
+    ├── auth/              Sign in, register, reset password, session state
+    ├── onboarding/, splash/, profile/, about/, status/, gallery/
     ├── posts/             Example feature (reference implementation)
     │   ├── domain/        Models
     │   ├── data/          Repository: talks to the API
     │   ├── posts_providers.dart   State exposed to the UI
     │   └── presentation/  Screens and widgets
-    └── settings/          Theme switcher (example of local state)
+    └── settings/          Theme, sign out, links to About
 ```
 
 ## The layers

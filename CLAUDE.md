@@ -28,8 +28,11 @@ lib/
     config/env.dart         # the ONLY place that reads dart-defines
     network/                # Dio, ApiClient, ApiException, interceptors, providers
     storage/                # LocalStorage + providers
+    forms/validators.dart   # all validation rules
+    connectivity/           # isOnlineProvider (UI hints only)
+    error/                  # global uncaught-error handling
     utils/logger.dart       # AppLogger (never use print)
-  shared/widgets/           # reusable, feature-agnostic widgets (AsyncValueView, ErrorView...)
+  shared/widgets/           # AsyncValueView, buttons/, forms/, feedback/ (StatusView, snackbars, dialogs)
   features/<name>/
     domain/                 # models (plain immutable classes)
     data/                   # <name>_repository.dart + its Provider
@@ -96,3 +99,14 @@ dart run scripts/build.dart apk --env prod   # release build, bumps build number
 - `new-feature`: scaffold a feature module end to end.
 - `add-api-endpoint`: add an endpoint to an existing repository and expose it via a provider.
 - `release`: bump version and produce release builds.
+
+## App-wide patterns (use these, don't reinvent them)
+
+- **Forms:** controls from `lib/shared/widgets/forms/`, rules from `Validators`, submit through `AppButton` + `runGuarded`. See `docs/guides/forms-and-validation.md`.
+- **Empty, error and offline states:** `StatusView.*`, or `AsyncValueView` for providers. Messages: `showAppSnack`, `showConfirmDialog`. Never display a raw exception; use `userMessage(error)`.
+- **Design tokens:** `AppSpacing`, `AppRadius`, `Gap`, `Breakpoints` from `app/theme/app_spacing.dart`. Shortcuts: `context.colors`, `context.textTheme`.
+- **Auth:** `authProvider` is the only source of the current user. Never navigate after sign-in or sign-out; `resolveRedirect` does it. Providers with per-user data must `ref.watch(currentUserIdProvider)`.
+- **Routes:** require sign-in unless listed in `Routes.public` or `Routes.authOnly`.
+- **Pages:** use `context.go` when a screen may have been opened by deep link, since `pop` needs a page to return to.
+- **Controllers:** create them as `State` fields and dispose them. Never create them in `build`.
+- **Reference:** `docs/architecture/app-flow.md` lists every screen and the edge cases already handled.
