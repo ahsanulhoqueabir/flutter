@@ -29,6 +29,8 @@ class ApiClient {
       return response.data as T;
     } on DioException catch (e) {
       throw ApiException.fromDio(e);
+    } on TypeError {
+      throw const BadResponseException(); // Body was not the expected JSON shape.
     }
   }
 }

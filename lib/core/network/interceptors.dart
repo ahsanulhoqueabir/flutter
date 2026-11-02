@@ -2,11 +2,22 @@ import 'package:dio/dio.dart';
 
 import '../utils/logger.dart';
 
-/// Adds `Authorization: Bearer <token>` when a token is available.
+/// Adds `Authorization: Bearer <token>` and reports when that token is rejected.
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor(this._readToken);
+  AuthInterceptor(this._readToken, {required this.onSessionExpired});
 
   final String? Function() _readToken;
+  final void Function() onSessionExpired;
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    // Compare tokens so a late 401 from an old session can't sign out a new one.
+    final sent = err.requestOptions.headers['Authorization'];
+    if (err.response?.statusCode == 401 && sent != null && sent == 'Bearer ${_readToken()}') {
+      onSessionExpired();
+    }
+    handler.next(err);
+  }
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
