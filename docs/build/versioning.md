@@ -71,7 +71,3 @@ On macOS/Linux, make the shell scripts executable once: `chmod +x scripts/*.sh`.
 3. `dart run scripts/build.dart ipa --bump none`
 4. Move the "Unreleased" notes in `CHANGELOG.md` under the new version.
 5. Commit `pubspec.yaml` and `CHANGELOG.md`, then tag: `git tag v1.5.0+38 && git push --tags`.
-
-## In CI
-
-CI builds use `--bump none`, because a CI runner shouldn't change the committed version. Bump locally (or in a dedicated release job that commits the bump) and let CI build what's committed.

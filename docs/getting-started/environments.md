@@ -7,7 +7,8 @@ The app has three environments: **dev**, **staging**, and **prod**. Each one is 
   "APP_ENV": "dev",
   "APP_NAME": "Template Dev",
   "API_BASE_URL": "https://api.dev.example.com",
-  "ENABLE_HTTP_LOGS": "true"
+  "ENABLE_HTTP_LOGS": "true",
+  "USE_MOCK_AUTH": "true"
 }
 ```
 
@@ -26,6 +27,7 @@ Flutter compiles these values into the app as constants. The class `Env` in `lib
 Env.name          // 'dev' | 'staging' | 'prod'
 Env.apiBaseUrl
 Env.enableHttpLogs
+Env.useMockAuth   // fake sign-in for dev and staging; see architecture/app-flow.md
 Env.isProd
 ```
 

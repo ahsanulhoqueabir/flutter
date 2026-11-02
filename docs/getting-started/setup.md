@@ -44,11 +44,11 @@ In VS Code, open the Run and Debug panel and pick **dev**, **staging**, or **pro
 
 While the app is running, press `r` for hot reload, `R` for hot restart, `q` to quit.
 
-> If you run without `--dart-define-from-file`, the app falls back to the defaults in `lib/core/config/env.dart`.
+> If you run without `--dart-define-from-file`, the app falls back to the defaults in `lib/core/config/env.dart`. Mock sign-in is off by default, so signing in will fail.
 
 ## 4. Check your work
 
-Before pushing code, run the same checks CI runs:
+Before pushing code, run the checks:
 
 ```bash
 dart run scripts/check.dart

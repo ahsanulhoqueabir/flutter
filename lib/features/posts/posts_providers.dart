@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../auth/auth_providers.dart';
 import 'data/posts_repository.dart';
 import 'domain/post.dart';
 
@@ -9,7 +10,11 @@ final postsProvider = AsyncNotifierProvider<PostsNotifier, List<Post>>(PostsNoti
 
 class PostsNotifier extends AsyncNotifier<List<Post>> {
   @override
-  Future<List<Post>> build() => ref.watch(postsRepositoryProvider).fetchPosts();
+  Future<List<Post>> build() {
+    // Refetch when the signed-in user changes, so no data leaks between accounts.
+    ref.watch(currentUserIdProvider);
+    return ref.watch(postsRepositoryProvider).fetchPosts();
+  }
 
   /// Re-runs [build]; existing data stays visible while reloading.
   Future<void> refresh() async {

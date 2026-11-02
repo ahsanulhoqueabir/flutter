@@ -19,11 +19,12 @@ dart run scripts/check.dart      # make sure formatting, analysis and tests pass
 ## Option A: the build script
 
 ```bash
-dart run scripts/build.dart <target> [--env dev|staging|prod] [--bump build|patch|minor|major|none]
+dart run scripts/build.dart <target> [--env dev|staging|prod] [--bump build|patch|minor|major|none] [--split-per-abi]
 ```
 
 - `--env` defaults to `prod`.
 - `--bump` defaults to `build` (increase only the build number). See [versioning.md](versioning.md).
+- `--split-per-abi` (APK only) builds one smaller APK per CPU architecture. See [Android](#android).
 - If the build fails, the version in `pubspec.yaml` is put back.
 
 Wrappers exist if you prefer: `./scripts/build.sh appbundle` (macOS/Linux) or `.\scripts\build.ps1 appbundle` (Windows).
@@ -60,6 +61,24 @@ dart run scripts/build.dart ipa --bump none
    flutter build apk --release --dart-define-from-file=config/prod.json \
      --obfuscate --split-debug-info=build/symbols/apk
    ```
+   **One APK per CPU architecture** (smaller files, for direct distribution):
+   ```bash
+   dart run scripts/build.dart apk --split-per-abi
+   # or, without the script:
+   flutter build apk --release --split-per-abi --dart-define-from-file=config/prod.json \
+     --obfuscate --split-debug-info=build/symbols/apk
+   ```
+   This creates three files in `build/app/outputs/flutter-apk/`:
+
+   | File | Devices |
+   |---|---|
+   | `app-arm64-v8a-release.apk` | Nearly all modern phones |
+   | `app-armeabi-v7a-release.apk` | Older 32-bit phones |
+   | `app-x86_64-release.apk` | Emulators and x86 devices |
+
+   To build only some of them with the plain Flutter command, add `--target-platform android-arm64,android-arm`.
+   Flutter gives each architecture its own version code, so it won't equal the build number in `pubspec.yaml`.
+   The Play Store doesn't need this: upload the `.aab` and Google delivers the right architecture to each device.
 3. Upload the `.aab` in Google Play Console → your app → Release → Create new release.
 4. Install an APK on a connected device: `flutter install` or `adb install build/app/outputs/flutter-apk/app-release.apk`.
 

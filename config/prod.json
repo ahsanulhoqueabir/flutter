@@ -2,5 +2,6 @@
   "APP_ENV": "prod",
   "APP_NAME": "Template",
   "API_BASE_URL": "https://jsonplaceholder.typicode.com",
-  "ENABLE_HTTP_LOGS": "false"
+  "ENABLE_HTTP_LOGS": "false",
+  "USE_MOCK_AUTH": "false"
 }

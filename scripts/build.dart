@@ -3,7 +3,9 @@
 /// Builds a release artifact and bumps the version automatically.
 ///
 /// Usage (run from the project root):
-///   `dart run scripts/build.dart <target> [--env dev|staging|prod] [--bump build|patch|minor|major|none]`
+///   `dart run scripts/build.dart <target> [--env dev|staging|prod] [--bump build|patch|minor|major|none] [--split-per-abi]`
+///
+/// `--split-per-abi` (apk only) builds one smaller APK per CPU architecture.
 ///
 /// Targets: apk, appbundle, ipa, ios, web, windows, macos, linux
 ///
@@ -12,6 +14,7 @@
 /// Examples:
 ///   dart run scripts/build.dart appbundle                 # 1.2.3+4 -> 1.2.3+5, then build
 ///   dart run scripts/build.dart apk --env staging --bump patch
+///   dart run scripts/build.dart apk --split-per-abi
 ///   dart run scripts/build.dart ipa --bump minor
 ///
 /// If the build fails, pubspec.yaml is restored to its previous version.
@@ -29,7 +32,7 @@ Future<void> main(List<String> args) async {
   if (args.isEmpty || !_targets.contains(args.first)) {
     stderr.writeln(
       'Usage: dart run scripts/build.dart <${_targets.join('|')}> '
-      '[--env dev|staging|prod] [--bump ${_bumps.join('|')}]',
+      '[--env dev|staging|prod] [--bump ${_bumps.join('|')}] [--split-per-abi]',
     );
     exit(64);
   }
@@ -37,9 +40,11 @@ Future<void> main(List<String> args) async {
   final target = args.first;
   final env = _option(args, '--env') ?? 'prod';
   final bump = _option(args, '--bump') ?? 'build';
+  final splitPerAbi = args.contains('--split-per-abi');
 
   final envFile = File('config/$env.json');
   if (!envFile.existsSync()) _fail('Missing ${envFile.path}');
+  if (splitPerAbi && target != 'apk') _fail('--split-per-abi only applies to the apk target');
   if (!_bumps.contains(bump)) _fail('--bump must be one of ${_bumps.join(', ')}');
 
   final before = readVersion();
@@ -51,6 +56,7 @@ Future<void> main(List<String> args) async {
     target,
     '--release',
     '--dart-define-from-file=${envFile.path}',
+    if (splitPerAbi) '--split-per-abi',
     if (_obfuscatable.contains(target)) ...[
       '--obfuscate',
       '--split-debug-info=build/symbols/$target',

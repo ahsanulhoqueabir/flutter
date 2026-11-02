@@ -73,4 +73,4 @@ Signing is managed in Xcode:
 3. Tick **Automatically manage signing** and pick your Apple Developer team.
 4. Make sure the **Bundle Identifier** matches the app you created in App Store Connect.
 
-`flutter build ipa` then signs automatically. For CI, use Fastlane Match or App Store Connect API keys instead of personal certificates.
+`flutter build ipa` then signs automatically.

@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-/// Runs every quality gate CI runs: format check, analyze, test.
+/// Runs every quality gate: format check, analyze, test.
 ///
 /// Usage: `dart run scripts/check.dart`
 library;

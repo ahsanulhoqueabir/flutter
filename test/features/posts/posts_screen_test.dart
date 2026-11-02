@@ -38,7 +38,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('No internet connection'), findsOneWidget);
-    expect(find.text('Retry'), findsOneWidget);
+    expect(find.text("You're offline"), findsOneWidget);
+    expect(find.text('Try again'), findsOneWidget);
   });
 }
