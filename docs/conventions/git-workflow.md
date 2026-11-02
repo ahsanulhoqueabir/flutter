@@ -4,7 +4,7 @@
 
 - `main` is always releasable. Don't commit to it directly.
 - Create a branch per change: `feature/user-profile`, `fix/login-crash`, `chore/upgrade-flutter`.
-- Open a pull request into `main`. CI (`.github/workflows/ci.yml`) must pass before merging.
+- Open a pull request into `main`. `dart run scripts/check.dart` must pass before merging.
 
 ## Commit messages
 
